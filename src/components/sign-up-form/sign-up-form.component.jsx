@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  createUserAuthWithEmailAndPassword,
+  createAuthUserWithEmailAndPassword,
   createUserDocFromAuth,
 } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
@@ -31,7 +31,7 @@ const SignUpForm = () => {
       return;
     }
 
-    createUserAuthWithEmailAndPassword(email, password)
+    createAuthUserWithEmailAndPassword(email, password)
       .then((response) => {
         createUserDocFromAuth(response.user, { displayName }).then(
           (response) => {
