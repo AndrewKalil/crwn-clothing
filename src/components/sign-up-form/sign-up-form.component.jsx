@@ -34,8 +34,7 @@ const SignUpForm = () => {
     createAuthUserWithEmailAndPassword(email, password)
       .then((response) => {
         createUserDocFromAuth(response.user, { displayName }).then(
-          (response) => {
-            console.log("Sign up success");
+          (success) => {
             setFormFields(deafultFormField);
           }
         );
