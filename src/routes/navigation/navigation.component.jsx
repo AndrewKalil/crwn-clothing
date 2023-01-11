@@ -1,6 +1,13 @@
 import React from "react";
-import "./navigation.style.scss";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+// Styles
+import {
+  LogoContainer,
+  NavigationContainer,
+  NavLink,
+  NavLinkContainer,
+} from "./navigation.style";
 
 // Components
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
@@ -17,27 +24,23 @@ const Navigation = () => {
 
   return (
     <React.Fragment>
-      <div className="navigation">
-        <Link className="logo-container" to="/">
+      <NavigationContainer>
+        <LogoContainer to="/">
           <CrownLogo />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
-            SHOP
-          </Link>
+        </LogoContainer>
+        <NavLinkContainer>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <span onClick={signOutuser} className="nav-link">
+            <NavLink as="span" onClick={signOutuser}>
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
-              SIGN IN
-            </Link>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinkContainer>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </React.Fragment>
   );
