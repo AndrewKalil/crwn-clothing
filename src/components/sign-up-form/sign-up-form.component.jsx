@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../store/user/user.reducer";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocFromAuth,
@@ -21,6 +23,7 @@ const deafultFormField = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(deafultFormField);
   const { displayName, email, password, confirmPassword } = formFields;
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,21 +38,16 @@ const SignUpForm = () => {
       return;
     }
 
-    createAuthUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        createUserDocFromAuth(response.user, { displayName }).then(
-          (success) => {
-            setFormFields(deafultFormField);
-          }
-        );
-      })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          alert("Cannot create user, email already in use");
-        } else {
-          console.log("User creation captured an error", error);
-        }
-      });
+    try {
+      dispatch(signUp({ email, password, displayName }));
+      setFormFields(deafultFormField);
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Cannot create user, email already in use");
+      } else {
+        console.log("User creation captured an error", error);
+      }
+    }
   };
 
   const handleChange = (event) => {

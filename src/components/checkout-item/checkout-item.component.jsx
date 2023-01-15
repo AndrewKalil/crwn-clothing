@@ -12,19 +12,27 @@ import {
   Value,
 } from "./checkout-item.style";
 
-const CheckoutItem = ({ item, itemQuantityAction, removeCartItem }) => {
+// Redux
+import { useDispatch } from "react-redux";
+import {
+  modifyItemQuantity,
+  removeCartItem,
+} from "../../store/cart/cart.reducer";
+
+const CheckoutItem = ({ item }) => {
+  const dispatch = useDispatch();
   const { imageUrl, name, quantity, id, price } = item;
 
   const incrementQuantity = () => {
-    itemQuantityAction(id, "increment");
+    dispatch(modifyItemQuantity({ id, actionType: "increment" }));
   };
 
   const decrementQuantity = () => {
-    itemQuantityAction(id, "decrement");
+    dispatch(modifyItemQuantity({ id, actionType: "decrement" }));
   };
 
   const clearCartItem = () => {
-    removeCartItem(id);
+    dispatch(removeCartItem(id));
   };
 
   return (
